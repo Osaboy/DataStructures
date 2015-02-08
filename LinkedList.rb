@@ -39,9 +39,19 @@ class LinkedList
     @head = node
   end
 
-  def insert_sorted(node)
-    if (!@head)
-      return insert(node)
+  def insert_sorted(new_node)
+    if (!@head || new_node.data < @head.data)
+      return insert(new_node)
+    end
+    current_node = @head
+    while (current_node.next && current_node.next.data < new_node.data)
+      current_node = current_node.next
+    end
+    if current_node.next
+      new_node.next = current_node.next
+      current_node.next = new_node
+    else
+      current_node.next = new_node
     end
   end
 
@@ -50,6 +60,17 @@ class LinkedList
     new_node = Node.new(data)
     new_node.next = @head
     @head = new_node
+  end
+
+  def add_sorted(data)
+    if (!@head || data < @head.data)
+      return add(data)
+    end
+    current_node = @head
+    while (current_node.next && current_node.next.data < data)
+      current_node = current_node.next
+    end
+    current_node.next = Node.new(data,current_node.next)
   end
 
   # method for printing all nodes in the linkedlist
