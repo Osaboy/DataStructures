@@ -35,7 +35,14 @@ class LinkedList
 
   # method for inserting a new node
   def insert(node)
-    @head = Node.new(node,head)
+    node.next = @head
+    @head = node
+  end
+
+  def insert_sorted(node)
+    if (!@head)
+      return insert(node)
+    end
   end
 
   # method for obtaining data, creating a node and adding the node to the linkedlist 
@@ -45,6 +52,7 @@ class LinkedList
     @head = new_node
   end
 
+  # method for printing all nodes in the linkedlist
   def recursiveprint(node)
     puts node
     recursiveprint(node.next) unless node.next == nil
