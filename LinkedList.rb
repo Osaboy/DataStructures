@@ -95,5 +95,25 @@ class LinkedList
     return nil
   end
 
+  def remove(data)
+    if (@head.data == data)
+      @head = @head.next
+      return true
+    else
+      prev_node = @head
+      temp_node = prev_node.next
+      until (prev_node)
+        if (temp_node.data == data)
+          prev_node.next = temp_node.next
+          temp_node.next = nil
+          return true
+        else
+          prev_node = prev_node.next
+          temp_node = temp_node.next
+        end
+      end
+    end
+    return false
+  end
 end
 
