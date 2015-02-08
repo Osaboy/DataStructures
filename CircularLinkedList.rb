@@ -33,6 +33,21 @@ class CLinkedList
     end
   end
 
+  def find_node_by_value(data)
+    current_node = @head
+    if (current_node.data == data)
+      return current_node
+    end
+    while (current_node && current_node.next != @tail.next)
+      if (current_node.data == data)
+        return current_node
+      else
+        current_node = current_node.next
+      end
+    end
+    return nil
+  end
+
   # method for printing all nodes in the linkedlist
   def recursiveprint(node)
     puts node
