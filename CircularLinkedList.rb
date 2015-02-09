@@ -1,4 +1,4 @@
-class Node
+  class Node
   attr_accessor :data, :next, :tail, :head 
 
   def initialize(data, next_node = nil)
@@ -28,8 +28,9 @@ class CLinkedList
       @head = new_node
       @tail = @head
     else
-      new_node.next = @head 
-      @tail = new_node  
+      @tail.next = new_node
+      @tail = new_node
+      new_node.next = @head       
     end
   end
 
@@ -48,6 +49,21 @@ class CLinkedList
     return nil
   end
 
+  def remove(data)
+    return nil if (!@head)
+
+    if (@head.data == data)
+      if (@head == @tail)
+        @head = nil
+        @tail = nil
+        return nil
+      end
+      @tail.next = @head.next
+      @head = @head.next
+      return true
+    end
+  end
+
   # method for printing all nodes in the linkedlist
   def recursiveprint(node)
     puts node
@@ -59,3 +75,4 @@ class CLinkedList
   end
 
 end
+
