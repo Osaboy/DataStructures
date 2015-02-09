@@ -50,18 +50,36 @@ class CLinkedList
   end
 
   def remove(data)
+    # dealing with an empty array
     return nil if (!@head)
-
+    
+    # removing the head
     if (@head.data == data)
       if (@head == @tail)
         @head = nil
         @tail = nil
-        return nil
+        return true
       end
       @tail.next = @head.next
       @head = @head.next
       return true
     end
+
+    prev_node = @head
+    current_node = @head.next
+    while (current_node != @head)
+      if (current_node.data == data)
+        prev_node.next = current_node.next
+        current_node.next = nil
+        # removing the tail
+        if (current_node == @tail)
+          @tail = prev_node
+        end
+        return true
+      end
+      current_node = current_node.next
+    end
+    return false
   end
 
   # method for printing all nodes in the linkedlist
