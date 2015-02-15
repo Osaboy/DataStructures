@@ -17,4 +17,27 @@ class BinaryTree
     @root = nil
   end
 
+  def insert(data)
+    @root = insert_node(@root, data)
+  end
+
+  def IsEmpty?()
+    return false if (@root)
+    return true
+  end
+
+  private
+
+  def insert_node(tree_node, data)
+    # binary tree is not empty return tree_node as the root
+    return TreeNode.new(data) unless tree_node
+
+    if (data < tree_node.data)
+      tree_node.left_child = insert_node(tree_node.left_child, data)
+    else
+      tree_node.right_child = insert_node(tree_node.right_child, data)
+    end 
+    return tree_node
+  end
+
 end
