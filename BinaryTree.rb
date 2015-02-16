@@ -21,6 +21,10 @@ class BinaryTree
     @root = insert_node(@root, data)
   end
 
+  def search(data)
+    return find_node(@root, data)
+  end
+
   def IsEmpty?()
     return false if (@root)
     return true
@@ -28,16 +32,29 @@ class BinaryTree
 
   private
 
-  def insert_node(tree_node, data)
-    # binary tree is not empty return tree_node as the root
-    return TreeNode.new(data) unless tree_node
+  def insert_node(parent_node, data)
+    # binary tree is not empty return parent_node as the root
+    return TreeNode.new(data) unless parent_node
 
-    if (data < tree_node.data)
-      tree_node.left_child = insert_node(tree_node.left_child, data)
+    if (data < parent_node.data)
+      parent_node.left_child = insert_node(parent_node.left_child, data)
     else
-      tree_node.right_child = insert_node(tree_node.right_child, data)
+      parent_node.right_child = insert_node(parent_node.right_child, data)
     end 
-    return tree_node
+    return parent_node
+  end
+
+  def find_node(parent_node, data)
+    
+    return false unless parent_node
+    return true if (parent_node.data == data)
+
+    if (data < parent_node.data)
+      return find_node(parent_node.left_child, data)
+    else
+      return find_node(parent_node.right_child, data)
+    end
+
   end
 
 end
