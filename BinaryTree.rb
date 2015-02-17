@@ -25,7 +25,11 @@ class BinaryTree
     return find_node(@root, data)
   end
 
-  def IsEmpty?()
+  def delete(data)
+    return delete_node(@root, data)
+  end
+
+  def is_empty?()
     return false if (@root)
     return true
   end
@@ -44,17 +48,51 @@ class BinaryTree
     return parent_node
   end
 
-  def find_node(parent_node, data)
-    
-    return false unless parent_node
-    return true if (parent_node.data == data)
-
-    if (data < parent_node.data)
-      return find_node(parent_node.left_child, data)
-    else
-      return find_node(parent_node.right_child, data)
+  # using an iterative process
+  def find_min(target_node)
+    while (target_node.left_child)
+      target_node = target_node.left_child  
     end
+    return target_node
+  end
 
+  # using recursion
+  def find_max(target_node)
+    if (!@root)
+      return nil
+    elsif (!target_node.right_child)
+      return target_node.data
+    end
+    return find_max(target_node.right_child)
+  end
+
+  def delete_node(target_node, data)
+    return nil if !@root
+
+    if (data < target_node.data)
+      return delete_node(target_node.left_child, data)
+    elsif (data > target_node.data)
+      return delete_node(target_node.right_child, data)
+    else # Found the node, get ready for deletion
+      # case 1: No Children
+      if (target_node.left_child == nil and target_node.right_child == nil)
+        target_node = nil
+        return target_node
+      # case 2: One child node, left child  
+      elsif (target_node.left_child == nil)
+        target_node = target_node.right_child
+        return target_node
+      # case 2: One child node, right child
+      elsif (target_node.right_child == nil)
+        target_node = target_node.left_child
+        return target_node
+      # case 3: Child nodes, left and right children
+      else
+        temp_node = find_min(target_node.right_child)
+        target_node.data = temp_node.data
+        target_node.right_child = delete_node(target_node.right_child,temp_node.data)
+      end
+    end
   end
 
 end
